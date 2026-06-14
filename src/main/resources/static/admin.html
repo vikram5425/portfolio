@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Vikram Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-logo">
+                <span class="logo-bracket">&lt;</span>Admin<span class="logo-bracket">/&gt;</span>
+            </div>
+            <a href="/" class="btn btn-sm btn-outline">← View Portfolio</a>
+        </div>
+    </header>
+
+    <!-- Admin Main -->
+    <main class="admin-main">
+        <div class="admin-container">
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="projects">📁 Projects</button>
+                <button class="admin-tab" data-tab="skills">⚡ Skills</button>
+                <button class="admin-tab" data-tab="experience">💼 Experience</button>
+                <button class="admin-tab" data-tab="certificates">📜 Certificates</button>
+                <button class="admin-tab" data-tab="education">🎓 Education</button>
+                <button class="admin-tab" data-tab="profile">👤 Profile</button>
+                <button class="admin-tab" data-tab="contacts">📧 Messages</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="admin-content">
+                <!-- Projects Tab -->
+                <div class="tab-panel active" id="tab-projects">
+                    <div class="panel-header">
+                        <h2>Manage Projects</h2>
+                        <button class="btn btn-primary btn-sm" onclick="showForm('projects')">+ Add Project</button>
+                    </div>
+                    <div class="form-container" id="form-projects" style="display:none">
+                        <form id="projectForm" onsubmit="saveItem(event, 'projects')">
+                            <input type="hidden" id="project-id">
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Title</label>
+                                    <input type="text" id="project-title" required>
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Tech Stack (comma separated)</label>
+                                    <input type="text" id="project-techStack" required>
+                                </div>
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Description</label>
+                                <textarea id="project-description" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Features (pipe | separated)</label>
+                                <input type="text" id="project-features" placeholder="Feature 1|Feature 2|Feature 3">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Live URL</label>
+                                    <input type="text" id="project-liveUrl">
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>GitHub URL</label>
+                                    <input type="text" id="project-githubUrl">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                <button type="button" class="btn btn-outline btn-sm" onclick="hideForm('projects')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Title</th><th>Tech Stack</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="projects-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Skills Tab -->
+                <div class="tab-panel" id="tab-skills">
+                    <div class="panel-header">
+                        <h2>Manage Skills</h2>
+                        <button class="btn btn-primary btn-sm" onclick="showForm('skills')">+ Add Skill</button>
+                    </div>
+                    <div class="form-container" id="form-skills" style="display:none">
+                        <form id="skillForm" onsubmit="saveItem(event, 'skills')">
+                            <input type="hidden" id="skill-id">
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Name</label>
+                                    <input type="text" id="skill-name" required>
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Category</label>
+                                    <select id="skill-category" required>
+                                        <option value="Frontend">Frontend</option>
+                                        <option value="Backend">Backend</option>
+                                        <option value="Database">Database</option>
+                                        <option value="Tools">Tools</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Proficiency (0-100)</label>
+                                    <input type="number" id="skill-proficiency" min="0" max="100" required>
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Icon (emoji)</label>
+                                    <input type="text" id="skill-icon" placeholder="☕">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                <button type="button" class="btn btn-outline btn-sm" onclick="hideForm('skills')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Name</th><th>Category</th><th>Proficiency</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="skills-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Experience Tab -->
+                <div class="tab-panel" id="tab-experience">
+                    <div class="panel-header">
+                        <h2>Manage Experience</h2>
+                        <button class="btn btn-primary btn-sm" onclick="showForm('experience')">+ Add Experience</button>
+                    </div>
+                    <div class="form-container" id="form-experience" style="display:none">
+                        <form id="experienceForm" onsubmit="saveItem(event, 'experience')">
+                            <input type="hidden" id="experience-id">
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Title</label>
+                                    <input type="text" id="experience-title" required>
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Company</label>
+                                    <input type="text" id="experience-company" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Duration</label>
+                                    <input type="text" id="experience-duration" required>
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Type</label>
+                                    <select id="experience-type" required>
+                                        <option value="Internship">Internship</option>
+                                        <option value="Full-time">Full-time</option>
+                                        <option value="Part-time">Part-time</option>
+                                        <option value="Freelance">Freelance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Responsibilities (pipe | separated)</label>
+                                <textarea id="experience-responsibilities" rows="3"></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                <button type="button" class="btn btn-outline btn-sm" onclick="hideForm('experience')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Title</th><th>Company</th><th>Duration</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="experience-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Certificates Tab -->
+                <div class="tab-panel" id="tab-certificates">
+                    <div class="panel-header">
+                        <h2>Manage Certificates</h2>
+                        <button class="btn btn-primary btn-sm" onclick="showForm('certificates')">+ Add Certificate</button>
+                    </div>
+                    <div class="form-container" id="form-certificates" style="display:none">
+                        <form id="certificateForm" onsubmit="saveItem(event, 'certificates')">
+                            <input type="hidden" id="certificate-id">
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Title</label>
+                                    <input type="text" id="certificate-title" required>
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Issuer</label>
+                                    <input type="text" id="certificate-issuer" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Date</label>
+                                    <input type="text" id="certificate-date">
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Credential URL</label>
+                                    <input type="text" id="certificate-credentialUrl">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                <button type="button" class="btn btn-outline btn-sm" onclick="hideForm('certificates')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Title</th><th>Issuer</th><th>Date</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="certificates-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Education Tab -->
+                <div class="tab-panel" id="tab-education">
+                    <div class="panel-header">
+                        <h2>Manage Education</h2>
+                        <button class="btn btn-primary btn-sm" onclick="showForm('education')">+ Add Education</button>
+                    </div>
+                    <div class="form-container" id="form-education" style="display:none">
+                        <form id="educationForm" onsubmit="saveItem(event, 'education')">
+                            <input type="hidden" id="education-id">
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Degree</label>
+                                    <input type="text" id="education-degree" required>
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Institution</label>
+                                    <input type="text" id="education-institution" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>CGPA</label>
+                                    <input type="text" id="education-cgpa">
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Graduation Year</label>
+                                    <input type="text" id="education-graduationYear">
+                                </div>
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Description</label>
+                                <textarea id="education-description" rows="3"></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                <button type="button" class="btn btn-outline btn-sm" onclick="hideForm('education')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Degree</th><th>Institution</th><th>CGPA</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="education-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div class="tab-panel" id="tab-profile">
+                    <div class="panel-header">
+                        <h2>Edit Profile</h2>
+                    </div>
+                    <div class="form-container" style="display:block">
+                        <form id="profileForm" onsubmit="saveProfile(event)">
+                            <input type="hidden" id="profile-id">
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Name</label>
+                                    <input type="text" id="profile-name" required>
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Title</label>
+                                    <input type="text" id="profile-title" required>
+                                </div>
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Bio</label>
+                                <textarea id="profile-bio" rows="4" required></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>Email</label>
+                                    <input type="email" id="profile-email">
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>Phone</label>
+                                    <input type="text" id="profile-phone">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group-admin">
+                                    <label>GitHub URL</label>
+                                    <input type="text" id="profile-github">
+                                </div>
+                                <div class="form-group-admin">
+                                    <label>LinkedIn URL</label>
+                                    <input type="text" id="profile-linkedin">
+                                </div>
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Resume URL</label>
+                                <input type="text" id="profile-resumeUrl">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-sm">Update Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contacts/Messages Tab -->
+                <div class="tab-panel" id="tab-contacts">
+                    <div class="panel-header">
+                        <h2>Contact Messages</h2>
+                    </div>
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="contacts-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
