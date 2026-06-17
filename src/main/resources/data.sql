@@ -8,11 +8,11 @@ INSERT INTO profile (name, title, bio, image_url, email, phone, github, linkedin
     'Java Full Stack Developer',
     'Hi, I''m Vikram, a passionate Java Full Stack Developer specializing in Java, Spring Boot, Hibernate, JPA, SQL, and Web Technologies. I enjoy building scalable applications and solving real-world problems through code.',
     '',
-    'vikram@example.com',
-    '+91 9876543210',
-    'https://github.com/vikram',
-    'https://linkedin.com/in/vikram',
-    '#'
+    'vikramsaravanan12345@gmail.com',
+    '+91 8754062289',
+    'https://github.com/vikram5425',
+    'https://www.linkedin.com/in/vikram-s-saravanan',
+    'https://drive.google.com/file/d/1S00uyu5FM_OJJs9fdMMw68AGpxlVz6yQ/view?usp=drive_link'
 );
 
 -- Projects
@@ -38,9 +38,9 @@ INSERT INTO projects (title, description, tech_stack, features, image_url, live_
 
 -- Skills - Frontend
 INSERT INTO skills (name, category, proficiency, icon) VALUES ('HTML', 'Frontend', 90, '🌐');
-INSERT INTO skills (name, category, proficiency, icon) VALUES ('CSS', 'Frontend', 85, '🎨');
-INSERT INTO skills (name, category, proficiency, icon) VALUES ('JavaScript', 'Frontend', 80, '⚡');
-INSERT INTO skills (name, category, proficiency, icon) VALUES ('Bootstrap', 'Frontend', 75, '📱');
+INSERT INTO skills (name, category, proficiency, icon) VALUES ('CSS', 'Frontend', 70, '🎨');
+INSERT INTO skills (name, category, proficiency, icon) VALUES ('JavaScript', 'Frontend', 50, '⚡');
+INSERT INTO skills (name, category, proficiency, icon) VALUES ('Bootstrap', 'Frontend', 45, '📱');
 
 -- Skills - Backend
 INSERT INTO skills (name, category, proficiency, icon) VALUES ('Java', 'Backend', 92, '☕');
@@ -61,10 +61,12 @@ INSERT INTO skills (name, category, proficiency, icon) VALUES ('IntelliJ IDEA', 
 
 -- Experience
 INSERT INTO experiences (title, company, duration, responsibilities, type) VALUES (
-    'Java Developer Intern',
-    'Tech Company',
+    'Java Full Stack Intern',
+    'Edu Tantr (VDT Edu Tantr Ventures Pvt. Ltd.), Bengaluru',
     '3 Months',
-    'Developed Java applications|Worked with SQL databases|Debugged and tested applications|Collaborated with development team',
+    '• Completed an intensive offline Java Full Stack program covering Spring Boot, REST API development, and frontend basics
+in a professional environment; organisation is AICTE-recognised and ISO 21001:2018 certified.
+• Gained hands-on exposure to full-stack project workflows, Git-based version control, and collaborative development',
     'Internship'
 );
 
@@ -79,7 +81,7 @@ INSERT INTO certificates (title, issuer, date, credential_url, image_url) VALUES
 INSERT INTO education (degree, institution, cgpa, graduation_year, description) VALUES (
     'B.Sc Computer Science',
     'Dr. SNS Rajalakshmi Arts and Science College',
-    '8.9/10',
+    '8.4/10',
     '2027 (Expected)',
     'Pursuing Bachelor of Science in Computer Science with focus on Java Full Stack Development and Database Management.'
 );

@@ -316,7 +316,6 @@ function renderEducation(educationList) {
 function initTypewriter() {
     const titles = [
         'Java Full Stack Developer',
-        'Spring Boot Developer',
         'Backend Developer',
         'Problem Solver'
     ];
