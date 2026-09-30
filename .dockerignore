@@ -1,5 +1,7 @@
-.git
-target
-.idea
-.vscode
-*.log
+target/
+.git/
+.gitignore
+data/
+deploy/
+*.md
+.vscode/
