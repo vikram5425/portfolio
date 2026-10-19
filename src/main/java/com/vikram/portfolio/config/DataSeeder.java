@@ -14,18 +14,23 @@ import com.vikram.portfolio.repository.ProjectRepository;
 import com.vikram.portfolio.repository.SkillRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
- * Seeds initial portfolio data if tables are empty.
+ * Seeds initial portfolio data asynchronously after ApplicationReadyEvent if tables are empty.
  * Idempotent: checks each repository before inserting to prevent duplicates
  * and preserve existing/updated records.
+ * Non-blocking: executes on a background daemon executor so container startup
+ * and health checks complete immediately without timeouts.
  */
 @Component
-public class DataSeeder implements CommandLineRunner {
+public class DataSeeder {
 
     private static final Logger log = LoggerFactory.getLogger(DataSeeder.class);
 
@@ -50,14 +55,58 @@ public class DataSeeder implements CommandLineRunner {
         this.educationRepository = educationRepository;
     }
 
-    @Override
-    public void run(String... args) {
-        seedProfile();
-        seedProjects();
-        seedSkills();
-        seedExperience();
-        seedCertificates();
-        seedEducation();
+    @EventListener(ApplicationReadyEvent.class)
+    public void onApplicationReady() {
+        ExecutorService executor = Executors.newSingleThreadExecutor(r -> {
+            Thread thread = new Thread(r, "portfolio-data-seeder");
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        executor.submit(() -> {
+            try {
+                seedAll();
+            } catch (Throwable t) {
+                log.error("Unexpected error during portfolio data seeding: {}", t.getMessage(), t);
+            } finally {
+                executor.shutdown();
+            }
+        });
+    }
+
+    private void seedAll() {
+        log.info("Starting background portfolio data seeding...");
+        try {
+            seedProfile();
+        } catch (Exception e) {
+            log.error("Failed to seed profile: {}", e.getMessage(), e);
+        }
+        try {
+            seedProjects();
+        } catch (Exception e) {
+            log.error("Failed to seed projects: {}", e.getMessage(), e);
+        }
+        try {
+            seedSkills();
+        } catch (Exception e) {
+            log.error("Failed to seed skills: {}", e.getMessage(), e);
+        }
+        try {
+            seedExperience();
+        } catch (Exception e) {
+            log.error("Failed to seed experience: {}", e.getMessage(), e);
+        }
+        try {
+            seedCertificates();
+        } catch (Exception e) {
+            log.error("Failed to seed certificates: {}", e.getMessage(), e);
+        }
+        try {
+            seedEducation();
+        } catch (Exception e) {
+            log.error("Failed to seed education: {}", e.getMessage(), e);
+        }
+        log.info("Background portfolio data seeding process finished.");
     }
 
     private void seedProfile() {
