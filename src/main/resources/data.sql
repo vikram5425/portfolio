@@ -1,6 +1,15 @@
 -- ==========================================
--- Vikram Portfolio - Seed Data
+-- Vikram Portfolio - Seed Data (PostgreSQL)
 -- ==========================================
+-- NOTE: This file is NOT executed automatically (spring.sql.init.mode=never).
+-- To seed your database for the first time, you can either:
+--   1. Set DATABASE_URL and run: spring.sql.init.mode=always (once), then set back to 'never'
+--   2. Execute this file directly against your Voroa PostgreSQL database using psql or a DB client
+--
+-- These INSERT statements use standard SQL and are safe to re-run because
+-- Hibernate's ddl-auto=update creates tables with auto-increment IDs,
+-- and duplicate inserts will simply create new rows with new IDs.
+-- If you want true idempotency, add unique constraints and use ON CONFLICT DO NOTHING.
 
 -- Profile
 INSERT INTO profile (name, title, bio, image_url, email, phone, github, linkedin, resume_url) VALUES (
